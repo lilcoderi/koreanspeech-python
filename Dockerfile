@@ -1,28 +1,27 @@
 FROM python:3.10-slim
 
-# Install ffmpeg dan system tools
+# Install ffmpeg & dependencies
 RUN apt-get update && \
     apt-get install -y ffmpeg git && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-# Set working dir
+# Set workdir
 WORKDIR /app
 
-# Salin requirements
+# Copy and install Python dependencies
 COPY requirements.txt .
 
-# Install torch CPU dari index khusus (untuk mengurangi size)
+# Install torch (versi ringan)
 RUN pip install --no-cache-dir torch==2.0.1+cpu -f https://download.pytorch.org/whl/torch_stable.html
 
-# Install sisa dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Salin seluruh app
+# Copy app files
 COPY . .
 
 # Expose port
 EXPOSE 5000
 
-# Gunakan Gunicorn sebagai server production
+# Run app with gunicorn
 CMD ["gunicorn", "--bind", "0.0.0.0:5000", "app:app"]

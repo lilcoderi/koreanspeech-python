@@ -1,10 +1,3 @@
-import subprocess
-import os
-
-# Install ffmpeg jika belum tersedia
-subprocess.call(["apt-get", "update"])
-subprocess.call(["apt-get", "install", "-y", "ffmpeg"])
-
 from flask import Flask, request, jsonify
 import tempfile
 import whisper

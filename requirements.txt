@@ -1,5 +1,4 @@
 Flask
 openai-whisper
-tqdm
 torch
-ffmpeg-python
+tqdm

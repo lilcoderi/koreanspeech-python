@@ -1,19 +1,25 @@
+# Gunakan image Python ringan
 FROM python:3.10-slim
 
-# Install dependencies
-RUN apt-get update && apt-get install -y ffmpeg git
+# Install ffmpeg dan dependency sistem minimal
+RUN apt-get update && \
+    apt-get install -y ffmpeg git && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
-# Set workdir
+# Tentukan direktori kerja
 WORKDIR /app
 
-# Copy files
-COPY . .
+# Salin file requirements.txt dan install dependency Python
+COPY requirements.txt .
 
-# Install Python packages
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Expose port
+# Salin semua file project ke direktori kerja
+COPY . .
+
+# Buka port Flask default
 EXPOSE 5000
 
-# Run app
+# Jalankan aplikasi
 CMD ["python", "app.py"]

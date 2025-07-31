@@ -4,7 +4,7 @@ import whisper
 import os
 
 app = Flask(__name__)
-model = whisper.load_model("tiny")
+model = whisper.load_model("tiny")  # Gunakan "tiny.en" jika hanya bahasa Inggris
 
 # Daftar target jawaban
 SOAL_TARGETS = [
@@ -71,7 +71,3 @@ def reset():
     current_soal_index = 0
     print("Soal direset ke 1.")
     return jsonify({"status": "reset", "current_soal": current_soal_index + 1})
-
-
-if __name__ == '__main__':
-    app.run(host="0.0.0.0", port=5000, debug=True)

@@ -1,4 +1,4 @@
 Flask
 openai-whisper
 tqdm
-torch==2.0.1+cpu
+gunicorn

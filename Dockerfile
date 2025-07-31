@@ -12,7 +12,7 @@ WORKDIR /app
 # Salin requirements
 COPY requirements.txt .
 
-# Install torch CPU dari index khusus
+# Install torch CPU dari index khusus (untuk mengurangi size)
 RUN pip install --no-cache-dir torch==2.0.1+cpu -f https://download.pytorch.org/whl/torch_stable.html
 
 # Install sisa dependencies
@@ -24,5 +24,5 @@ COPY . .
 # Expose port
 EXPOSE 5000
 
-# Jalankan aplikasi
-CMD ["python", "app.py"]
+# Gunakan Gunicorn sebagai server production
+CMD ["gunicorn", "--bind", "0.0.0.0:5000", "app:app"]
